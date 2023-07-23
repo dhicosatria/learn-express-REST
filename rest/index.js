@@ -18,7 +18,7 @@ app.set('view engine','ejs') //set mesin rendering tampilan pake ejs//
 
 
 
-const comments = [
+let comments = [
     {
         id: uuidv4(),
         username: 'micahel',
@@ -64,14 +64,18 @@ app.get('/comments/:id/edit',(req,res)=>{
     const comment = comments.find(c => c.id === id)
     res.render('comments/edit',{comment})
 })
-app.patch('comments/:id',(req,res) => {
+app.patch('/comments/:id',(req,res) => {
     const {id} = req.params
     const newComment = req.body.text
     const foundComment = comments.find(c =>c.id ===id)
-    foudComment.text = newComment
+    foundComment.text = newComment
     res.redirect("/comments")
 });
-
+app.delete('/comments/:id', (req,res)=>{
+    const {id} = req.params;
+    comments = comments.filter(c=>c.id !==id)
+    res.redirect('/comments')
+})
 
 
 
